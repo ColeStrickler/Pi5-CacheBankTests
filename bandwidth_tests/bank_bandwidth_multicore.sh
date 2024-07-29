@@ -46,7 +46,11 @@ function test_bandwidth()
 }
 
 
+# disable gui
+init 3
 
+# disable dynamic frequency scaling
+echo "performance" | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor 
 
 for ((i = 1; i < 5; i++)); do
     test_bandwidth $i
