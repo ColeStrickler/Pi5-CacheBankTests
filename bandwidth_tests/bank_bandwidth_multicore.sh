@@ -9,6 +9,7 @@
 
 CORUN_ITER=10000000
 MAIN_ITER=50000
+MAX_MLP=6 # experimentally determined with TestMLP.sh
 
 function test_bandwidth()
 {
@@ -22,11 +23,11 @@ function test_bandwidth()
     echo "bandwidth 0" > ./out4.txt
 
     for ((i = 1; i < $num_cores; i++)); do
-        ../BkPLL32 -m 800 -a read -b 0x60 -l 32 -i 10000000 -e 2 -c $i 1>out$i.txt 2>/dev/null & 
+        ../BkPLL32 -m 600 -a read -b 0x60 -l $MAX_MLP -i 10000000 -e 2 -c $i 1>out$i.txt 2>/dev/null & 
     done
 
     
-    ../BkPLL32 -m 800 -a read -b 0x60 -l 32 -i $MAIN_ITER -e 2 -c 0 1>out4.txt 2>/dev/null
+    ../BkPLL32 -m 600 -a read -b 0x60 -l $MAX_MLP -i $MAIN_ITER -e 2 -c 0 1>out4.txt 2>/dev/null
     killall BkPLL32 1>/dev/null 2>/dev/null
 
 
